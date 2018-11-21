@@ -1,5 +1,5 @@
 var fs = require("fs");
-var controller  = (function(){
+var productcontroller  = (function(){
     function filter(arr,key,value){
         try{
             let response = arr.filter((iObj)=>iObj[key].toLowerCase().includes(value.toLowerCase()));
@@ -11,7 +11,7 @@ var controller  = (function(){
 
     function updateDb(products,msg,iCallBack){
         try{
-            fs.writeFile(__dirname + "/products.json",JSON.stringify(products),(err,data)=>{
+            fs.writeFile(__dirname + "/../db/products.json",JSON.stringify(products),(err,data)=>{
                 if(err){
                     if(iCallBack && typeof iCallBack == 'function'){
                         iCallBack(err);
@@ -39,6 +39,7 @@ var controller  = (function(){
 
     this.add = function(iProduct,iCallBack){
         try{
+            console.log(iProduct)
             this.getList((products)=>{
                 if(products && products instanceof Array){
                     products.push(iProduct);
@@ -55,13 +56,13 @@ var controller  = (function(){
 
     this.getList = function(iCallBack){
         try{
-          fs.readFile(__dirname + "/products.json",(err,data)=>{
+          fs.readFile(__dirname + "/../db/products.json",(err,data)=>{
               if(err){
                   if(iCallBack && typeof iCallBack == 'function')
                     iCallBack(err);
               }else{
                 if(iCallBack && typeof iCallBack == 'function')
-                    iCallBack(JSON.parse(data));
+                    iCallBack(data ? JSON.parse(data) : JSON.parse([]));
               }
           });  
         }catch(error){
@@ -114,4 +115,4 @@ var controller  = (function(){
     return this;
 })();
 
-module.exports = controller;
+module.exports = productcontroller;
