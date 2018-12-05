@@ -23,7 +23,7 @@ router.post('/notification',function(req,res,next){
         "notification": {
             "title": req.body.name,
             "body": "Newsletter Available!",
-            "icon": "./mayur.jpg",
+            "icon": __dirname + "/mayur.jpg",
             "vibrate": [100, 50, 100],
             "data": {
                 "dateOfArrival": Date.now(),
