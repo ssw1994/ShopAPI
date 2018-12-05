@@ -21,7 +21,7 @@ router.post('/notification',function(req,res,next){
 
     const notificationPayload = {
         "notification": {
-            "title": "Angular News",
+            "title": req.body.name,
             "body": "Newsletter Available!",
             "icon": "assets/mayur.jpg",
             "vibrate": [100, 50, 100],
