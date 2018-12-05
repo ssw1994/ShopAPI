@@ -14,7 +14,7 @@ webpush.setVapidDetails(
 );
 
 router.post('/notification',function(req,res,next){
-    const allSubscriptions = [];
+    const allSubscriptions = [{"endpoint":"https://fcm.googleapis.com/fcm/send/fynLAQxgH0U:APA91bGfnAHyH57jVEa0-b0LRDJCVZ7RApUoq2W9ZvJKOTBEyU3Khmcljm6FfPAME3bidzXJKz3V-8J0_WCCajACpAqfvxWT-_QQDqYa3mU70PwYixa9JQSluM693iX2YbjsJWsjPBOy","expirationTime":null,"keys":{"p256dh":"BA_U82JA0pyu37Eqj7Ob5L0FQmMcZ0k4PZB2_oMn1RUWtrmUulEAgwvbdFwcZWw7Rv4hHKgaR7K0UJFc_hyrm3o","auth":"AyV6WSUXpSKvIYC2DMYzOA"}},{"endpoint":"https://fcm.googleapis.com/fcm/send/fynLAQxgH0U:APA91bGfnAHyH57jVEa0-b0LRDJCVZ7RApUoq2W9ZvJKOTBEyU3Khmcljm6FfPAME3bidzXJKz3V-8J0_WCCajACpAqfvxWT-_QQDqYa3mU70PwYixa9JQSluM693iX2YbjsJWsjPBOy","expirationTime":null,"keys":{"p256dh":"BA_U82JA0pyu37Eqj7Ob5L0FQmMcZ0k4PZB2_oMn1RUWtrmUulEAgwvbdFwcZWw7Rv4hHKgaR7K0UJFc_hyrm3o","auth":"AyV6WSUXpSKvIYC2DMYzOA"}}];
     console.log(req);  
     console.log('Total subscriptions', allSubscriptions.length);
 
@@ -43,3 +43,5 @@ router.post('/notification',function(req,res,next){
             res.sendStatus(500);
         });
 });
+
+module.exports = router;

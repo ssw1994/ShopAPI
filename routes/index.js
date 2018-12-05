@@ -26,4 +26,19 @@ router.post('/upload',function(req,res){
       res.end(JSON.stringify({fileName:req.file.originalname,status:"File is uploaded successfully!"}));
   });  
 });
+
+var mysql = require('mysql')
+var connection = mysql.createConnection({
+  host     : 'SUMI\\SQLEXPRESS',
+  user     : 'SUMI\\rmau',
+  password : 123,
+  database : 'learn'
+});
+
+// connection.connect()
+// connection.query("select * from users",(err,rows,fields)=>{
+//  if(err)
+//     console.log(err);
+//  console.log("This solution is",rows);
+// });
 module.exports = router;
