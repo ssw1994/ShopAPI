@@ -23,7 +23,7 @@ router.post('/notification',function(req,res,next){
         "notification": {
             "title": req.body.name,
             "body": "Newsletter Available!",
-            "icon": "https://www.dropbox.com/s/kq6cxxwbbtjhr3d/Sachin%20Photo.JPG?dl=0",
+            "icon": "./assets/icons/icon-96x96.png",
             "vibrate": [100, 50, 100],
             "data": {
                 "dateOfArrival": Date.now(),
