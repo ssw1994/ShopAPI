@@ -69,7 +69,7 @@ var webHooks = new WebHooks({
 
   router.post("/webhook",function(req,res,next){
     console.log("incoming webhook :" + JSON.stringify(req.body));
-    res.send(200);
+    res.send({statuscode : 200 , data:req.body});
   });
 
   //webHooks.trigger("getMessage");
