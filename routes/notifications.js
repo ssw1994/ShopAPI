@@ -1,6 +1,8 @@
 const webpush = require('web-push');
 var express = require('express');
 var router = express.Router();
+var WebHooks = require('node-webhooks')
+var request = require("request");
 
 const vapidKeys = {
     "publicKey":"BF_K0ldEyLZqRbH6LXeWo7zbOhvy2Xnk4rNu0lkUxg-brIIA4PoNC7M2aC5wC-EU0BIhx7c0ZC2g4FoXiG6DyAA",
@@ -12,6 +14,65 @@ webpush.setVapidDetails(
     vapidKeys.publicKey,
     vapidKeys.privateKey
 );
+
+
+var webHooks = new WebHooks({
+    db: './webHooksDB.json', // json file that store webhook URLs
+    httpSuccessCodes: [200, 201, 202, 203, 204], //optional success http status codes
+  })
+  
+  
+  var emitter = webHooks.getEmitter()
+     
+ webHooks.add('getMessage', "http://panel.apiwha.com/get_messages.php?apikey=5O45OYKJKMXX0LANU0BV&number=919403483605").then(function(res){
+      console.log("Result :" + res);
+  }).catch(function(err){
+      console.log(err)
+  })
+
+
+
+  var messages;
+
+  emitter.on('*.success', function (hookName, statusCode, body) {
+    //if(iCallBack){
+        messages = {
+            hook:hookName,
+            statusCode:statusCode,
+            body:body
+        };    
+    //}
+    });
+  
+  router.get("/whatsAppMessages",function(req,res,next){
+    request.get("http://panel.apiwha.com/get_messages.php?apikey=5O45OYKJKMXX0LANU0BV&number=919403483605",function(error,response,body){
+        res.send(JSON.parse(body));
+    })
+  });
+
+  router.post("/send",function(req,res,next){
+    console.log(req);
+    var options = { 
+        method: 'GET',
+        url: 'https://panel.apiwha.com/send_message.php',
+        qs:{ 
+            apikey: req.body.API_KEY,
+            number: req.body.MOBILE_NUMBER,
+            text: req.body.TEXT_MEESAGE
+        }
+    }
+    request(options, function (error, response, body) {
+        if (error) throw new Error(error);
+        res.send(body);
+    });
+  });
+
+  router.post("/webhook",function(req,res,next){
+    console.log("incoming webhook :" + JSON.stringify(req.body));
+    res.send(200);
+  });
+
+  //webHooks.trigger("getMessage");
 
 router.post('/notification',function(req,res,next){
     const allSubscriptions = [{"endpoint":"https://fcm.googleapis.com/fcm/send/fynLAQxgH0U:APA91bGfnAHyH57jVEa0-b0LRDJCVZ7RApUoq2W9ZvJKOTBEyU3Khmcljm6FfPAME3bidzXJKz3V-8J0_WCCajACpAqfvxWT-_QQDqYa3mU70PwYixa9JQSluM693iX2YbjsJWsjPBOy","expirationTime":null,"keys":{"p256dh":"BA_U82JA0pyu37Eqj7Ob5L0FQmMcZ0k4PZB2_oMn1RUWtrmUulEAgwvbdFwcZWw7Rv4hHKgaR7K0UJFc_hyrm3o","auth":"AyV6WSUXpSKvIYC2DMYzOA"}},{"endpoint":"https://fcm.googleapis.com/fcm/send/fynLAQxgH0U:APA91bGfnAHyH57jVEa0-b0LRDJCVZ7RApUoq2W9ZvJKOTBEyU3Khmcljm6FfPAME3bidzXJKz3V-8J0_WCCajACpAqfvxWT-_QQDqYa3mU70PwYixa9JQSluM693iX2YbjsJWsjPBOy","expirationTime":null,"keys":{"p256dh":"BA_U82JA0pyu37Eqj7Ob5L0FQmMcZ0k4PZB2_oMn1RUWtrmUulEAgwvbdFwcZWw7Rv4hHKgaR7K0UJFc_hyrm3o","auth":"AyV6WSUXpSKvIYC2DMYzOA"}},

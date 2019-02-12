@@ -16,6 +16,9 @@ var storage =   multer.diskStorage({
   }  
 });
 
+
+//webHooks.trigger("getMessage");
+
 var upload = multer({ storage : storage}).single('myfile');
 
 router.post('/upload',function(req,res){
