@@ -71,7 +71,7 @@ router.post("/sendMail", (req, res, next) => {
             if (error) {
               res.send(error);
             } else {
-              res.send('Email sent: ' + info.response);
+              res.send({statusCode:200,info:info});
             }
         });
     } catch (error) {
