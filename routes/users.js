@@ -11,16 +11,16 @@ userrouter.get("/",(req,res,next)=>{
   })
 });
 
-userrouter.put("/register",(req,res,next)=>{
-  //console.log(req.body);
+userrouter.put("/register",function(req,res,next){
+  console.log(req.body);
   usercontroller.addUser(req.body,(result)=>{
     res.send(result);
   });
 });
 
-
 userrouter.post("/login",(req,res,next)=>{
-  usercontroller.login(req.body,(result)=>{
+  usercontroller.login(req.body,function(result){
+    console.log("Herrrr.....",result);
     res.send(result);
   });
 });

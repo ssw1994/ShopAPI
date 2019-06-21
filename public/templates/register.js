@@ -18,6 +18,7 @@ let registerTemplate = (() => {
                     }
                     tr td{
                         font-size: 12px;
+                        font-family:Arial, Helvetica, sans-serif
                     }
                 </style>
            </head>
@@ -29,7 +30,7 @@ let registerTemplate = (() => {
                     </tr>
                     <tr>
                         <td>
-                            <label>hi ${iObj.username}</span></label>
+                            <h2>hi ${iObj.username}</span></h2>
                             <div style="margin-left:5%;">
                                 You have successfully created SSWShop Account please click <a href="facebook.com">here </a> to activate your account
                                 <div>

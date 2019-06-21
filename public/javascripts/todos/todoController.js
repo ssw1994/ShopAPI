@@ -8,6 +8,17 @@ let connection = mysql.createConnection({
 });
 var todoController = (function () {
 
+    const db = function (query, iCallBack) {
+        try {
+            connection.query(query, function (error, rows, fields) {
+                if (iCallBack && typeof iCallBack == 'function')
+                    iCallBack({ error: error, rows: rows, fields: fields })
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     const connect = function (iCallBack) {
         try {
             connection.connect((error, res) => {
@@ -34,13 +45,13 @@ var todoController = (function () {
 
     const insertTodo = function (iReq, iCallBack) {
         try {
-            if(iReq && iReq.body){
+            if (iReq && iReq.body) {
                 let iObj = iReq.body;
-                if(iObj.hasOwnProperty("todo_name") && iObj.hasOwnProperty("todo_priority") && iObj.hasOwnProperty("todo_assignee") && iObj.hasOwnProperty("todo_description") && iObj.hasOwnProperty("todo_date")){
-                    connection.query("CALL insertTodo('" + iObj.todo_name +"','"+ iObj.todo_priority +"','"+ iObj.todo_assignee+"','"+iObj.todo_description +"','"+iObj.todo_date+"')",function(error,rows,fields){
-                        if(error) throw error;
+                if (iObj.hasOwnProperty("todo_name") && iObj.hasOwnProperty("todo_priority") && iObj.hasOwnProperty("todo_assignee") && iObj.hasOwnProperty("todo_description") && iObj.hasOwnProperty("todo_date")) {
+                    connection.query("CALL insertTodo('" + iObj.todo_name + "','" + iObj.todo_priority + "','" + iObj.todo_assignee + "','" + iObj.todo_description + "','" + iObj.todo_date + "')", function (error, rows, fields) {
+                        if (error) throw error;
 
-                        if(iCallBack && typeof iCallBack == 'function')
+                        if (iCallBack && typeof iCallBack == 'function')
                             iCallBack(rows);
                     });
                 }

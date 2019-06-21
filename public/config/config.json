@@ -1,0 +1,9 @@
+{
+    "local": {
+        "db": {
+            "user":"sa",
+            "password":"root",
+            "server":"ELITEBOOK-PC"
+        }
+    }
+}
