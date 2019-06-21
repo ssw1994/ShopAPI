@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@types/socket.io": "^2.1.2",
+    "bufferutil": "4.0.1",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
@@ -21,7 +22,9 @@
     "request": "^2.88.0",
     "socket.io": "^2.2.0",
     "tedious": "^6.1.1",
-    "web-push": "^3.3.3"
+    "utf-8-validate": "5.0.2",
+    "web-push": "^3.3.3",
+    "ws": "7.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
