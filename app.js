@@ -34,9 +34,13 @@ var options = {
   httpCompression: true,
   origins: '*:*'
 };
-const PORT = 3002;
-const server = require('http').Server(app);
-const io = require('socket.io')(PORT,options).listen(server);
+// const PORT = 3002;
+// const server = require('http').createServer(app);
+// const io = require('socket.io').listen(server);
+// app.start = app.listen = function(){
+//   return server.listen.apply(server, arguments)
+// }
+//const io = require('socket.io')(PORT,options).listen(server);
 //server.listen(PORT);
 //io.set('origins', '*:*');
 // io.on('connection', (socket) => {
@@ -45,46 +49,46 @@ const io = require('socket.io')(PORT,options).listen(server);
 
 // Sockert Code
 
-io.on("connection", (socket) => {
-  console.log("Connected.....");
-  let previousId;
-  const safeJoin = currentId => {
-    socket.leave(previousId);
-    socket.join(currentId);
-    previousId = currentId;
-  };
-  socket.on('reconnect_attempt', () => {
-    socket.io.opts.transports = ['polling', 'websocket'];
-  });
-  socket.on("getDoc", docId => {
-    safeJoin(docId);
-    socket.emit("document", documents[docId]);
-  });
+// io.on("connection", (socket) => {
+//   console.log("Connected.....");
+//   let previousId;
+//   const safeJoin = currentId => {
+//     socket.leave(previousId);
+//     socket.join(currentId);
+//     previousId = currentId;
+//   };
+//   socket.on('reconnect_attempt', () => {
+//     socket.io.opts.transports = ['polling', 'websocket'];
+//   });
+//   socket.on("getDoc", docId => {
+//     safeJoin(docId);
+//     socket.emit("document", documents[docId]);
+//   });
 
-  socket.on("addDoc", doc => {
-    documents[doc.id] = doc;
-    safeJoin(doc.id);
-    io.emit("documents", Object.keys(documents));
-    socket.emit("document", doc);
-  });
+//   socket.on("addDoc", doc => {
+//     documents[doc.id] = doc;
+//     safeJoin(doc.id);
+//     io.emit("documents", Object.keys(documents));
+//     socket.emit("document", doc);
+//   });
 
-  socket.on("editDoc", doc => {
-    documents[doc.id] = doc;
-    socket.to(doc.id).emit("document", doc);
-  });
+//   socket.on("editDoc", doc => {
+//     documents[doc.id] = doc;
+//     socket.to(doc.id).emit("document", doc);
+//   });
 
-  socket.on('msg',msg=>{
-    console.log("messages",msg);
-    io.emit('getmsg',{data:msg});
-  });
+//   socket.on('msg',msg=>{
+//     console.log("messages",msg);
+//     io.emit('getmsg',{data:msg});
+//   });
 
-  socket.on('locationchage',cordinates=>{
-    console.log("current cordinates");
-    io.emit("getchange",cordinates);
-  });
+//   socket.on('locationchage',cordinates=>{
+//     console.log("current cordinates");
+//     io.emit("getchange",cordinates);
+//   });
 
-  //io.emit("documents", Object.keys(documents));
-});
+//   //io.emit("documents", Object.keys(documents));
+// });
 
 // End of Socket Code
 
