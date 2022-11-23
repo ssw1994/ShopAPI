@@ -20,7 +20,7 @@
     "nodemailer": "^4.6.8",
     "pug": "2.0.0-beta11",
     "request": "^2.88.0",
-    "socket.io": "^2.2.0",
+    "socket.io": "^2.5.0",
     "tedious": "^6.1.1",
     "utf-8-validate": "5.0.2",
     "web-push": "^3.3.3",
